@@ -1,0 +1,27 @@
+name: Stepik Programming Course Checks
+
+on:
+  workflow_call:
+    inputs:
+      STEPIK_CLIENT_ID:
+        type: string
+        required: true
+    secrets:
+      STEPIK_CLIENT_SECRET:
+        required: true
+#      TEMPLATE_READ_TOKEN:
+#        required: false
+
+jobs:
+  core-checker:
+    uses: mxpatlas/edu-task-checker/.github/workflows/checker.yml@master
+    with:
+      course_repository: "mxpatlas/stepik-programming-course-tasks"
+      stepik_client_id: ${{ inputs.STEPIK_CLIENT_ID }}
+      course_tasks: |
+        - dir: task_001_hello_world
+          test_type: verify
+          stepik_id: 11246374
+    secrets:
+      STEPIK_CLIENT_SECRET: ${{ secrets.STEPIK_CLIENT_SECRET }}
+      #TEMPLATE_READ_TOKEN: ${{ secrets.TEMPLATE_READ_TOKEN }}
